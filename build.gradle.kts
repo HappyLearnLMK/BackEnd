@@ -28,16 +28,18 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	// querydsl
+	implementation("com.querydsl:querydsl-jpa:5.0.0")
+	kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
+	// validation
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	
-	// querydsl
-	implementation("com.querydsl:querydsl-jpa:5.0.0")
-	kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
-	kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
