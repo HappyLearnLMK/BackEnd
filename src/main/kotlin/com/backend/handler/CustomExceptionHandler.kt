@@ -2,7 +2,7 @@ package com.backend.handler
 
 import com.backend.handler.ex.CustomApiException
 import com.backend.handler.ex.CustomValidationException
-import com.backend.utill.ResponseDto
+import com.backend.util.ResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
