@@ -2,13 +2,11 @@ package com.backend.product.domain
 
 import com.backend.product.dto.req.ProductReqDto
 import jakarta.persistence.*
-import java.util.UUID
+import java.util.*
 
 @Entity
 class Product(
-    @Id
-    @Column(name = "PRODUCT_CODE")
-    val productCode: String,
+
     @Column(name = "PRODUCT_NAME", nullable = false)
     val productName: String,
     @Column(name = "WHOLE_PRICE")
@@ -18,12 +16,17 @@ class Product(
     @Column(name = "SALES_YN", nullable = false)
     val salesYn: Boolean,
     @OneToMany(mappedBy = "productOptionSeq", fetch = FetchType.LAZY)
-    val productOptions: MutableList<ProductOption> = mutableListOf()
+    val productOptions: MutableList<ProductOption> = mutableListOf(),
 
+    @Id
+    @Column(name = "PRODUCT_CODE")
+    var productCode: String,
 ) {
 
     constructor(genCode: String, productReqDto: ProductReqDto) : this(
-        genCode, productReqDto.productName,
-        productReqDto.wholePrice, productReqDto.retailPrice, productReqDto.saleYn
+        productReqDto.productName, productReqDto.wholePrice,
+        productReqDto.retailPrice, productReqDto.saleYn,
+        productCode = genCode
     )
+
 }

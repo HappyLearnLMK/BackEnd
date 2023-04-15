@@ -7,31 +7,31 @@ import com.backend.product.repository.ProductOptionRepository
 import com.backend.product.repository.ProductRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
 import java.util.*
 
 @Service
 class ProductService(
     private val productRepository: ProductRepository,
-    private val productOptionRepository: ProductOptionRepository
+    private val productOptionRepository: ProductOptionRepository,
 ) {
 
     @Transactional
-    fun saveProduct(productDto: ProductReqDto) {
+    fun saveProduct(productDto: ProductReqDto, file: MultipartFile?): Product {
         val product = Product(UUID.randomUUID().toString(), productDto)
 
-        /*val productOptions = mutableListOf<ProductOption>()
-        for (productOptionReqDto in productDto.productOptionsReqDtos) {
-            val productOption = ProductOption(productOptionReqDto)
-            productOption.addProduct(product)
-        }*/
+        if (productDto.productOptionsReqDtos.isEmpty()) {
+            productRepository.save(product)
+        } else {
+            val productOptions = productDto.productOptionsReqDtos.map { optionsDto ->
+                val productOption = ProductOption(optionsDto)
+                productOption.addProduct(product)
+                productOption
+            }.toMutableList()
 
-        val productOptions = productDto.productOptionsReqDtos.map { optionsDto ->
-            val productOption = ProductOption(optionsDto)
-            productOption.addProduct(product)
-            productOption
-        }.toMutableList()
-
-        productRepository.save(product)
-        productOptionRepository.saveAll(productOptions)
+            productRepository.save(product)
+            productOptionRepository.saveAll(productOptions)
+        }
+        return product
     }
 }

@@ -23,7 +23,11 @@ class ProductOption(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val productOptionSeq: Long? = null,
 ) {
-    constructor(optionReqDto: ProductOptionReqDto) : this(optionReqDto.optionName, optionReqDto.optionVale, optionReqDto.currentQuantity)
+    constructor(optionReqDto: ProductOptionReqDto) : this(
+        optionReqDto.optionName,
+        optionReqDto.optionVale,
+        optionReqDto.currentQuantity
+    )
 
     fun addProduct(product: Product) {
         this.product = product
