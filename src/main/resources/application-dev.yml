@@ -13,6 +13,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
 
 file:
   dir: /Users/eco_min/Desktop/project/backend/file/
