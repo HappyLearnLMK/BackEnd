@@ -5,6 +5,7 @@ import com.backend.user.dto.request.UserUpdateRequest
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserRepository: JpaRepository<User, Long> {
-    fun deleteByUserCode(userCode:String):User?
-/*    fun updateByUserCode(userCode:String, request: UserUpdateRequest)*/
+    fun deleteByUserCode(userCode:String):Int
+    fun findFirstByOrderByUserCodeDesc():User
+    fun findByUserCode(userCode: String): User
 }

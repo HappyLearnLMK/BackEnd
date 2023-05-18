@@ -4,9 +4,9 @@ import com.backend.user.domain.UserType
 import java.time.LocalDate
 
 data class UserUpdateRequest(
-    val userCode: String,
-    val userName:String,
-    val mobile: String,
-    val gender: Char,
-    val type: UserType
+    var userCode: String,
+    var userName:String,
+    var mobile: String,
+    var gender: Char,
+    var type: UserType
 )
