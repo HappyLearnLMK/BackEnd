@@ -20,17 +20,31 @@ class UserService(
                             request.signUpDate,
                             request.gender,
                             request.type,
-                            "U0002")
+                            createNewUserCode())
         )
     }
+
+    private fun createNewUserCode(): String {
+        val lastUser = userRepository.findFirstByOrderByUserCodeDesc()
+        val lastUserCode = lastUser.userCode
+        val firstLetter = lastUserCode!!.substring(0, 1)
+        val fromSecondLetter = lastUserCode!!.substring(1, lastUserCode.length).toInt()+1
+        return  firstLetter+fromSecondLetter
+    }
+
     @Transactional
     fun getUsers(): MutableList<User> {
         return userRepository.findAll()
     }
-    /*@Transactional
+    @Transactional
     fun updateUser(request: UserUpdateRequest) {
-        return userRepository.updateByUserCode(request.userCode, request)
-    }*/
+        val user = userRepository.findByUserCode(request.userCode)
+        user.userName = request.userName
+        user.mobile = request.mobile
+        user.gender = request.gender
+        user.type = request.type
+        userRepository.save(user)
+    }
     @Transactional
     fun deleteUser(userCode: String) {
         userRepository.deleteByUserCode(userCode)
