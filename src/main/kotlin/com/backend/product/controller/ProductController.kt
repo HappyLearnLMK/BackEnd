@@ -1,8 +1,6 @@
 package com.backend.product.controller
 
-import com.backend.product.dto.req.CategoryReqDto
-import com.backend.product.dto.req.ProductPageReqDto
-import com.backend.product.dto.req.ProductSaveReqDto
+import com.backend.product.dto.req.ProductReqDto
 import com.backend.product.service.ProductImageService
 import com.backend.product.service.ProductService
 import com.backend.util.ResponseDto
