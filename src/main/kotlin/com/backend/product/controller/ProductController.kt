@@ -1,6 +1,8 @@
 package com.backend.product.controller
 
-import com.backend.product.dto.req.ProductReqDto
+import com.backend.product.dto.req.CategoryReqDto
+import com.backend.product.dto.req.ProductPageReqDto
+import com.backend.product.dto.req.ProductSaveReqDto
 import com.backend.product.service.ProductImageService
 import com.backend.product.service.ProductService
 import com.backend.util.ResponseDto
@@ -23,14 +25,21 @@ class ProductController(
 ) {
     @PostMapping("/save_product")
     fun saveProduct(
-        @RequestPart @Valid productReqDto: ProductReqDto,
         @RequestPart(required = false) file: MultipartFile?,
-        bindingResult: BindingResult
+        @RequestPart @Valid productSaveReqDto: ProductSaveReqDto,
+        bindingResult: BindingResult,
     ): ResponseEntity<*> {
-        val saveProduct = productService.saveProduct(productReqDto, file)
+        val saveProduct = productService.saveProduct(productSaveReqDto, file)
         val storeFile: UploadFile? = fileStore.storeFile(file)
         productImageService.saveImage(storeFile, saveProduct)
-        return ResponseEntity(ResponseDto(1, "상품 등록 완료", productReqDto), HttpStatus.OK)
+        return ResponseEntity(ResponseDto(1, "상품 등록 완료", null), HttpStatus.CREATED)
+    }
+
+    @PostMapping("/category")
+    fun productPage(@RequestBody productPageReqDto: ProductPageReqDto): ResponseEntity<ResponseDto<*>> {
+        val categoryReqDto = CategoryReqDto(productPageReqDto.mainCategory, productPageReqDto.middleCategory)
+        val productPage = productService.productPage(productPageReqDto, categoryReqDto)
+        return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productPage), HttpStatus.OK)
     }
 
     @GetMapping("/image/{fileName}")
