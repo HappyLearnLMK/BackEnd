@@ -9,5 +9,7 @@ data class UserSaveRequest(
     val mobile: String,
     val signUpDate: LocalDate,
     val gender: Char,
-    val type: UserType
+    val type: UserType,
+    val userId: String,
+    val password: String
 )

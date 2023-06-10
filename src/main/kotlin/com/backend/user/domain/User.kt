@@ -16,6 +16,8 @@ class User(
     var gender: Char,
     @Enumerated(EnumType.STRING)
     var type: UserType,
+    val userId:String,
+    var password:String,
     @Id
     val userCode:String?
 ) {

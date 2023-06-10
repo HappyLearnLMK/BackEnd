@@ -23,8 +23,8 @@ class ProductController(
 ) {
     @PostMapping("/save_product")
     fun saveProduct(
-        @RequestPart @Valid productReqDto: ProductReqDto,
         @RequestPart(required = false) file: MultipartFile?,
+        @RequestPart @Valid productReqDto: ProductReqDto,
         bindingResult: BindingResult
     ): ResponseEntity<*> {
         val saveProduct = productService.saveProduct(productReqDto, file)

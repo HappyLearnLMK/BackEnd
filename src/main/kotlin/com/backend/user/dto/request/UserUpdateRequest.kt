@@ -8,5 +8,6 @@ data class UserUpdateRequest(
     var userName:String,
     var mobile: String,
     var gender: Char,
-    var type: UserType
+    var type: UserType,
+    var password: String
 )
