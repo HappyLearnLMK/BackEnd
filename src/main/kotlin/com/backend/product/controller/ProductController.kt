@@ -24,13 +24,20 @@ class ProductController(
     @PostMapping("/save_product")
     fun saveProduct(
         @RequestPart(required = false) file: MultipartFile?,
-        @RequestPart @Valid productReqDto: ProductReqDto,
-        bindingResult: BindingResult
+        @RequestPart @Valid productSaveReqDto: ProductSaveReqDto,
+        bindingResult: BindingResult,
     ): ResponseEntity<*> {
-        val saveProduct = productService.saveProduct(productReqDto, file)
+        val saveProduct = productService.saveProduct(productSaveReqDto, file)
         val storeFile: UploadFile? = fileStore.storeFile(file)
         productImageService.saveImage(storeFile, saveProduct)
-        return ResponseEntity(ResponseDto(1, "상품 등록 완료", productReqDto), HttpStatus.OK)
+        return ResponseEntity(ResponseDto(1, "상품 등록 완료", null), HttpStatus.CREATED)
+    }
+
+    @PostMapping("/category")
+    fun productPage(@RequestBody productPageReqDto: ProductPageReqDto): ResponseEntity<ResponseDto<*>> {
+        val categoryReqDto = CategoryReqDto(productPageReqDto.mainCategory, productPageReqDto.middleCategory)
+        val productPage = productService.productPage(productPageReqDto, categoryReqDto)
+        return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productPage), HttpStatus.OK)
     }
 
     @GetMapping("/image/{fileName}")
