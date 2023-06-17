@@ -8,6 +8,13 @@ class BackendApplicationTests {
 
 	@Test
 	fun contextLoads() {
+		val properties = System.getProperties()
+		val stringPropertyNames = properties.stringPropertyNames()
+		for (stringPropertyName in stringPropertyNames) {
+			println("stringPropertyName = $stringPropertyName")
+			println("getProperty = ${properties.getProperty(stringPropertyName)}")
+			println("============================================================")
+		}
 	}
 
 }
