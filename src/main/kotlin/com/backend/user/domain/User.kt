@@ -1,13 +1,11 @@
 package com.backend.user.domain
 
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.time.LocalDate
 import java.util.*
 
 @Entity
+@Table(name = "MEMBER")
 class User(
     var userName:String,
     var birthDate: LocalDate,
