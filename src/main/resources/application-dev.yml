@@ -16,4 +16,5 @@ spring:
         show_sql: true
 
 file:
-  dir: /Users/eco_min/Desktop/project/backend/file/
+  dir: ${user.dir}/file/
+#  dir: /Users/eco_min/Desktop/project/backend/file/
