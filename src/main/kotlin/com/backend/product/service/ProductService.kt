@@ -6,6 +6,7 @@ import com.backend.product.domain.ProductOption
 import com.backend.product.dto.req.CategoryReqDto
 import com.backend.product.dto.req.ProductPageReqDto
 import com.backend.product.dto.req.ProductSaveReqDto
+import com.backend.product.dto.res.ProductDetailResDto
 import com.backend.product.dto.res.ProductPageResDto
 import com.backend.product.repository.CategoryRepository
 import com.backend.product.repository.ProductOptionRepository
@@ -46,8 +47,13 @@ class ProductService(
     }
 
     @Transactional
-    fun productPage(productPageReqDto: ProductPageReqDto, categoryReqDto: CategoryReqDto): Page<ProductPageResDto>? {
+    fun productCategoryPage(productPageReqDto: ProductPageReqDto, categoryReqDto: CategoryReqDto): Page<ProductPageResDto>? {
         val pageRequest = PageRequest.of(productPageReqDto.page, productPageReqDto.size)
-        return productRepository.productPage(pageRequest, categoryReqDto)
+        return productRepository.productCategoryPage(pageRequest, categoryReqDto)
+    }
+
+    @Transactional
+    fun productDetailPage(productCode: String): ProductDetailResDto? {
+        return productRepository.productDetailPage(productCode)
     }
 }
