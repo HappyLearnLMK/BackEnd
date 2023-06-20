@@ -4,13 +4,11 @@ import lombok.Getter
 import lombok.NoArgsConstructor
 import lombok.Setter
 
-@NoArgsConstructor
-@Getter
-@Setter
+//@NoArgsConstructor
 class ProductPageResDto(
-    var productCode: String,
-    var productName: String,
-    var originalFileName: String,
-    var saveFilename: String
+    val productCode: String,
+    val productName: String,
+    val originalFileName: String,
+    val saveFilename: String
 ) {
 }
