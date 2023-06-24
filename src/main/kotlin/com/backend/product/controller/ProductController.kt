@@ -26,12 +26,12 @@ class ProductController(
 ) {
     @PostMapping("/save_product")
     fun saveProduct(
-        @RequestPart(required = false) file: MultipartFile?,
+        @RequestPart(required = false) file: List<MultipartFile?>,
         @RequestPart @Valid productSaveReqDto: ProductSaveReqDto,
         bindingResult: BindingResult,
     ): ResponseEntity<*> {
-        val saveProduct = productService.saveProduct(productSaveReqDto, file)
-        val storeFile: UploadFile? = fileStore.storeFile(file)
+        val saveProduct = productService.saveProduct(productSaveReqDto)
+        val storeFile: List<UploadFile?> = fileStore.storeFiles(file)
         productImageService.saveImage(storeFile, saveProduct)
         return ResponseEntity(ResponseDto(1, "상품 등록 완료", null), HttpStatus.CREATED)
     }
@@ -44,7 +44,7 @@ class ProductController(
     }
 
     @GetMapping("/detail")
-    fun productDetailPage(@Param("productCode") productCode: String): ResponseEntity<ResponseDto<*>>  {
+    fun productDetailPage(@RequestParam productCode: String): ResponseEntity<ResponseDto<*>>  {
         val productDetailPage = productService.productDetailPage(productCode)
         return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productDetailPage), HttpStatus.OK)
     }
