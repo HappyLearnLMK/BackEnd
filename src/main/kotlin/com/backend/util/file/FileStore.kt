@@ -16,6 +16,10 @@ class FileStore {
         return fileDir + fileName
     }
 
+    fun storeFiles(multipartFiles: List<MultipartFile?>): List<UploadFile?> {
+        return multipartFiles.map { storeFile(it) }
+    }
+
     fun storeFile(multipartFile: MultipartFile?): UploadFile?{
         if (multipartFile!!.isEmpty) {
             return null
