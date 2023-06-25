@@ -13,8 +13,11 @@ class ProductImageService(
 ) {
 
     @Transactional
-    fun saveImage(uploadFile: UploadFile?, product: Product) {
-        val productImage = ProductImage(uploadFile!!.storeFIleName, uploadFile.uploadFileName, product)
-        productImageRepository.save(productImage)
+    fun saveImage(uploadFiles: List<UploadFile?>, product: Product) {
+        for (uploadFile in uploadFiles) {
+            val productImage = ProductImage(uploadFile!!.storeFIleName, uploadFile.uploadFileName, product)
+            productImageRepository.save(productImage)
+        }
+
     }
 }
