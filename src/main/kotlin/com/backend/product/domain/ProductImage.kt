@@ -9,7 +9,7 @@ class ProductImage(
     val saveFilename: String,
 
     @Column
-    val originalFileName: String?,
+    val originalFileName: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_CODE")

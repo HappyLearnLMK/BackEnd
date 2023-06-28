@@ -1,5 +1,6 @@
 package com.backend.config
 
+import com.querydsl.jpa.JPQLTemplates
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import org.springframework.context.annotation.Bean
@@ -9,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class Config : WebMvcConfigurer{
+class Config : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
@@ -24,6 +25,6 @@ class Config : WebMvcConfigurer{
 
     @Bean
     fun jpaQueryFactory(em: EntityManager): JPAQueryFactory {
-        return JPAQueryFactory(em)
+        return JPAQueryFactory(JPQLTemplates.DEFAULT, em)
     }
 }

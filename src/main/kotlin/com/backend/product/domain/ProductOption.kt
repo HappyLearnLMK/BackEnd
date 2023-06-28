@@ -12,7 +12,7 @@ class ProductOption(
     @Column
     val optionValue: String,
     @Column
-    val currentQuantity: String,
+    val currentQuantity: Int,
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_CODE")

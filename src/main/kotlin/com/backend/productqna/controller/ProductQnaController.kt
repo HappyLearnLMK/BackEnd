@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -31,7 +32,7 @@ class ProductQnaController(
     }
 
     @GetMapping("/qna")
-    fun productQna(@Param("productCode") productCode: String): ResponseEntity<*> {
+    fun productQna(@RequestParam productCode: String): ResponseEntity<*> {
         val qnaList = productQnaService.qnaList(productCode)
         return ResponseEntity(ResponseDto(1, "Qna 답면 등록 완료", qnaList), HttpStatus.OK)
     }

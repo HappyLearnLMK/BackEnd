@@ -10,6 +10,7 @@ import com.backend.util.file.FileStore
 import com.backend.util.file.UploadFile
 import jakarta.validation.Valid
 import org.springframework.core.io.UrlResource
+import org.springframework.data.repository.query.Param
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
@@ -25,21 +26,27 @@ class ProductController(
 ) {
     @PostMapping("/save_product")
     fun saveProduct(
-        @RequestPart(required = false) file: MultipartFile?,
+        @RequestPart(required = false) file: List<MultipartFile?>,
         @RequestPart @Valid productSaveReqDto: ProductSaveReqDto,
         bindingResult: BindingResult,
     ): ResponseEntity<*> {
-        val saveProduct = productService.saveProduct(productSaveReqDto, file)
-        val storeFile: UploadFile? = fileStore.storeFile(file)
+        val saveProduct = productService.saveProduct(productSaveReqDto)
+        val storeFile: List<UploadFile?> = fileStore.storeFiles(file)
         productImageService.saveImage(storeFile, saveProduct)
         return ResponseEntity(ResponseDto(1, "상품 등록 완료", null), HttpStatus.CREATED)
     }
 
     @PostMapping("/category")
-    fun productPage(@RequestBody productPageReqDto: ProductPageReqDto): ResponseEntity<ResponseDto<*>> {
+    fun productCategoryPage(@RequestBody productPageReqDto: ProductPageReqDto): ResponseEntity<ResponseDto<*>> {
         val categoryReqDto = CategoryReqDto(productPageReqDto.mainCategory, productPageReqDto.middleCategory)
-        val productPage = productService.productPage(productPageReqDto, categoryReqDto)
+        val productPage = productService.productCategoryPage(productPageReqDto, categoryReqDto)
         return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productPage), HttpStatus.OK)
+    }
+
+    @GetMapping("/detail")
+    fun productDetailPage(@RequestParam productCode: String): ResponseEntity<ResponseDto<*>>  {
+        val productDetailPage = productService.productDetailPage(productCode)
+        return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productDetailPage), HttpStatus.OK)
     }
 
     @GetMapping("/image/{fileName}")
