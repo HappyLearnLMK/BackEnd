@@ -25,7 +25,7 @@ class CustomValidAop {
                 for (fieldError in bindingResult.fieldErrors) {
                     errorMap[fieldError.field] = fieldError.defaultMessage
                 }
-                throw CustomValidationException("유효성 검사 실패", errorMap)
+                throw CustomValidationException(errorMap = errorMap)
             }
         }
         return proceedingJoinPoint.proceed()
