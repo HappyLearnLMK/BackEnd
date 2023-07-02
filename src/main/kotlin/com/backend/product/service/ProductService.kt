@@ -1,6 +1,7 @@
 package com.backend.product.service
 
-import com.backend.handler.ex.CustomApiException
+import com.backend.handler.ex.CategoryNotFoundException
+import com.backend.handler.ex.ProductNotFoundException
 import com.backend.product.domain.Product
 import com.backend.product.domain.ProductOption
 import com.backend.product.dto.req.CategoryReqDto
@@ -32,7 +33,7 @@ class ProductService(
     fun saveProduct(productDto: ProductSaveReqDto): Product {
         val findCategory =
             categoryRepository.findByMainCategoryAndMiddleCategory(productDto.mainCategory, productDto.middleCategory)
-                ?: throw CustomApiException("Category 가 존재하지 않습니다.")
+                ?: throw CategoryNotFoundException()
         val product = productDto.saveProduct(findCategory)
 
         if (productDto.productOptionsReqDtoList.isEmpty()) {
@@ -61,15 +62,28 @@ class ProductService(
 
     @Transactional
     fun productDetailPage(productCode: String): ProductDetailResDto? {
-        val product = productRepository.findByIdOrNull(productCode) ?: throw CustomApiException("유저가 없습니다.")
+        val product = productRepository.findByIdOrNull(productCode) ?: throw ProductNotFoundException()
 
         val productOptionList =
             productOptionRepository.findAllByProduct(product)
                 .map { ProductOptionResDto(it.optionName, it.optionValue, it.currentQuantity) }
 
-        val productImages = productImageRepository.findAllByProduct(product)
+        val findAllByProduct = productImageRepository.findAllByProduct(product)
+
+        val thumbsImages = findAllByProduct
+            .filter { it.type == "THUMBS" }
             .map { ProductImagesResDto(it.originalFileName, it.saveFilename) }
 
-        return ProductDetailResDto(product.productName, product.retailPrice, productOptionList, productImages)
+        val detailImages = findAllByProduct
+            .filter { it.type == "DETAIL" }
+            .map { ProductImagesResDto(it.originalFileName, it.saveFilename) }
+
+        return ProductDetailResDto(
+            product.productName,
+            product.retailPrice,
+            productOptionList,
+            thumbsImages,
+            detailImages
+        )
     }
 }

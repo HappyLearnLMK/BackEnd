@@ -4,7 +4,8 @@ class ProductDetailResDto(
     val productName: String,
     val retailPrice: Int,
     val productDetail: List<ProductOptionResDto>,
-    var productImages: List<ProductImagesResDto>
+    val thumbsImages: List<ProductImagesResDto>,
+    val detailImages: List<ProductImagesResDto>
 ) {
 
 }
