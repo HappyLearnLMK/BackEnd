@@ -1,6 +1,6 @@
 package com.backend.productqna.service
 
-import com.backend.handler.ex.CustomApiException
+import com.backend.handler.ex.QnaNotFoundException
 import com.backend.productqna.dto.req.SaveAnswerReqDto
 import com.backend.productqna.dto.req.SaveQuestionReqDto
 import com.backend.productqna.dto.res.QnaResDto
@@ -23,7 +23,7 @@ class ProductQnaService(
     @Transactional
     fun saveAnswer(saveAnswerReqDto: SaveAnswerReqDto) {
         val productQna = productQnaRepository.findByIdOrNull(saveAnswerReqDto.qnaSeq)
-            ?: throw CustomApiException("해당 QnA가 삭제되었거나 없습니다.")
+            ?: throw QnaNotFoundException()
 
         productQna.sellerId = saveAnswerReqDto.userId
         productQna.question = saveAnswerReqDto.content
