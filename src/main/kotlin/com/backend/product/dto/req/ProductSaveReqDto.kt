@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotNull
 import java.util.*
 
 class ProductSaveReqDto (
-     var mainCategory: String,
-     var middleCategory: String,
+     val mainCategory: String,
+     val middleCategory: String,
      @field:NotEmpty
      val productName: String,
      val wholePrice: Int,
@@ -24,3 +24,4 @@ class ProductSaveReqDto (
                category = findCategory, productCode = saveProductUUid)
      }
 }
+

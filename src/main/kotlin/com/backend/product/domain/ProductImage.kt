@@ -11,6 +11,9 @@ class ProductImage(
     @Column
     val originalFileName: String,
 
+    @Column
+    val type: String,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_CODE")
     val product: Product,

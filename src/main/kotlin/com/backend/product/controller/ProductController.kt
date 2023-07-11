@@ -10,7 +10,6 @@ import com.backend.util.file.FileStore
 import com.backend.util.file.UploadFile
 import jakarta.validation.Valid
 import org.springframework.core.io.UrlResource
-import org.springframework.data.repository.query.Param
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
@@ -26,13 +25,16 @@ class ProductController(
 ) {
     @PostMapping("/save_product")
     fun saveProduct(
-        @RequestPart(required = false) file: List<MultipartFile?>,
+        @RequestPart(required = false) thumbsImages: List<MultipartFile?>,
+        @RequestPart(required = false) detailImages: List<MultipartFile?>,
         @RequestPart @Valid productSaveReqDto: ProductSaveReqDto,
         bindingResult: BindingResult,
     ): ResponseEntity<*> {
         val saveProduct = productService.saveProduct(productSaveReqDto)
-        val storeFile: List<UploadFile?> = fileStore.storeFiles(file)
-        productImageService.saveImage(storeFile, saveProduct)
+        val thumbsStoreFile: List<UploadFile?> = fileStore.storeFiles(thumbsImages)
+        val detailStoreFile: List<UploadFile?> = fileStore.storeFiles(detailImages)
+        productImageService.saveImages(thumbsStoreFile, "THUMBS", saveProduct)
+        productImageService.saveImages(detailStoreFile, "DETAIL", saveProduct)
         return ResponseEntity(ResponseDto(1, "상품 등록 완료", null), HttpStatus.CREATED)
     }
 
@@ -44,7 +46,7 @@ class ProductController(
     }
 
     @GetMapping("/detail")
-    fun productDetailPage(@RequestParam productCode: String): ResponseEntity<ResponseDto<*>>  {
+    fun productDetailPage(@RequestParam productCode: String): ResponseEntity<ResponseDto<*>> {
         val productDetailPage = productService.productDetailPage(productCode)
         return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productDetailPage), HttpStatus.OK)
     }
