@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Email
 class SaveQuestionReqDto(
     val productCode: String,
     @field:Email
-    val userId: String,
+    val memberId: String,
     val qnaType: QnaType,
     val content: String,
     val secretYN: String
@@ -16,7 +16,7 @@ class SaveQuestionReqDto(
     fun toEntity(): ProductQna {
         return ProductQna(
             productCode = productCode,
-            customerId = userId,
+            customerId = memberId,
             qnaType = qnaType,
             question = content,
             secretYN = secretYN

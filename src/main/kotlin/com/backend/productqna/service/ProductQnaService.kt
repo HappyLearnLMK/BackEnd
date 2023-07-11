@@ -25,7 +25,7 @@ class ProductQnaService(
         val productQna = productQnaRepository.findByIdOrNull(saveAnswerReqDto.qnaSeq)
             ?: throw CustomApiException("해당 QnA가 삭제되었거나 없습니다.")
 
-        productQna.sellerId = saveAnswerReqDto.userId
+        productQna.sellerId = saveAnswerReqDto.memberId
         productQna.question = saveAnswerReqDto.content
     }
 
