@@ -25,7 +25,7 @@ class ProductQnaService(
         val productQna = productQnaRepository.findByIdOrNull(saveAnswerReqDto.qnaSeq)
             ?: throw QnaNotFoundException()
 
-        productQna.sellerId = saveAnswerReqDto.userId
+        productQna.sellerId = saveAnswerReqDto.memberId
         productQna.question = saveAnswerReqDto.content
     }
 
