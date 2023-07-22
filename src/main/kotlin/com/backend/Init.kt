@@ -1,30 +1,30 @@
 package com.backend
 
 import com.backend.product.domain.Category
+import com.backend.product.repository.CategoryRepository
+import com.backend.user.domain.User
+import com.backend.user.domain.UserType
+import com.backend.user.repository.UserRepository
 import jakarta.annotation.PostConstruct
-import jakarta.persistence.EntityManager
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @Component
 class Init (
-    private val initService: InitService
+    private val categoryRepository: CategoryRepository,
+    private val userRepository: UserRepository,
+    private val passwordEncoder: BCryptPasswordEncoder
 ) {
 
     @PostConstruct
-    fun init(){
-        initService.dbCategoryInit()
-    }
-
-    @Component
-    @Transactional
-    class InitService(
-        private val em: EntityManager
-    ){
-        fun dbCategoryInit() {
-            val category = Category("outer", "cloths")
-            em.persist(category)
-        }
-
+    fun dataInit() {
+        val category = Category("outer", "cloths")
+        val user = User(
+            "ADMIN", LocalDate.now(), "010-0000-0000", LocalDate.now(),
+            'F', UserType.ADMIN, "ADMIN", passwordEncoder.encode("admin"), "Admin"
+        )
+        categoryRepository.save(category)
+        userRepository.save(user)
     }
 }
