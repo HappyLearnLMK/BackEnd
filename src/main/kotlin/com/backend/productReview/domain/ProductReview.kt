@@ -17,12 +17,12 @@ class ProductReview(
 
     var score: Int = 0,
 
-    var like: Int = 0,
+    var likes: Int = 0,
 
     var answer: String = "",
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val reviewSeq: String? = null
 ) {
 }
