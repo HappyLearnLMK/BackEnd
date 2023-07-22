@@ -1,3 +1,4 @@
+/*
 package com.backend.util.file
 
 import okhttp3.MultipartBody
@@ -13,3 +14,4 @@ interface retrofit_interface{
         @Part("memberId") memberId: String,
         @Part imageFile : MultipartBody.Part): Call<String>
 }
+*/
