@@ -8,4 +8,6 @@ interface UserRepository: JpaRepository<User, Long> {
     fun deleteByUserCode(userCode:String):Int
     fun findFirstByOrderByUserCodeDesc():User
     fun findByUserCode(userCode: String): User
+
+    fun findByUserName(userName: String): User
 }
