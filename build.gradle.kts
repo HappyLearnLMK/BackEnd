@@ -26,18 +26,18 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     // querydsl
-    /*	implementation("com.querydsl:querydsl-jpa:5.0.0")
-        kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
-        kapt("org.springframework.boot:spring-boot-configuration-processor")*/
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     implementation("com.querydsl:querydsl-core:5.0.0")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-kotlin-codegen:5.0.0")
     // validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging-jvm
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
