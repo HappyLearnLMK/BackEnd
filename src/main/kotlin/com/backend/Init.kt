@@ -22,7 +22,7 @@ class Init (
         val category = Category("outer", "cloths")
         val user = User(
             "ADMIN", LocalDate.now(), "010-0000-0000", LocalDate.now(),
-            'F', UserType.ADMIN, "ADMIN", passwordEncoder.encode("admin"), "Admin"
+            'F', UserType.ADMIN, "ADMIN@naver.com", passwordEncoder.encode("admin"), "Admin"
         )
         categoryRepository.save(category)
         userRepository.save(user)
