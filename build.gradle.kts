@@ -38,6 +38,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging-jvm
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+    
+    // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation("com.auth0:java-jwt:4.4.0")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
