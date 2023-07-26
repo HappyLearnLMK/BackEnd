@@ -44,7 +44,7 @@ class ProductReviewService(
         val review = productReviewRepository.findByReviewSeq(dto.reviewSeq)
         review.contents = dto.contents
         review.answer = dto.answer
-        review.like = dto.like
+        review.likes = dto.like
         review.score = dto.score
         productReviewRepository.save(review)
     }

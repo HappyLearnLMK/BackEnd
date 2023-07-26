@@ -5,19 +5,19 @@ import java.time.LocalDate
 import java.util.*
 
 @Entity
-@Table(name = "MEMBER")
+@Table(name = "USERS")
 class User(
-    var userName:String,
+    var userName: String,
     var birthDate: LocalDate,
     var mobile: String,
     val signUpDate: LocalDate,
     var gender: Char,
     @Enumerated(EnumType.STRING)
     var type: UserType,
-    val userId:String,
-    var password:String,
+    val userId: String,
+    var password: String,
     @Id
-    val userCode:String?
+    val userCode: String?
 ) {
 
 }
