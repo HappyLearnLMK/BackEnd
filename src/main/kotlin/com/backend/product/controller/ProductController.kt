@@ -24,7 +24,7 @@ class ProductController(
     private val fileStore: FileStore
 ) {
     @PostMapping("/save_product")
-    fun saveProduct(
+    fun save(
         @RequestPart(required = false) thumbsImages: List<MultipartFile?>,
         @RequestPart(required = false) detailImages: List<MultipartFile?>,
         @RequestPart @Valid productSaveReqDto: ProductSaveReqDto,
@@ -33,17 +33,25 @@ class ProductController(
         val saveProduct = productService.saveProduct(productSaveReqDto)
         val thumbsStoreFile: List<UploadFile?> = fileStore.storeFiles(thumbsImages)
         val detailStoreFile: List<UploadFile?> = fileStore.storeFiles(detailImages)
-        productImageService.saveImages(thumbsStoreFile, "THUMBS", saveProduct)
-        productImageService.saveImages(detailStoreFile, "DETAIL", saveProduct)
+        productImageService.saveAll(thumbsStoreFile, "THUMBS", saveProduct)
+        productImageService.saveAll(detailStoreFile, "DETAIL", saveProduct)
         return ResponseEntity(ResponseDto(1, "상품 등록 완료", null), HttpStatus.CREATED)
     }
 
-    @PostMapping("/category")
+    @PostMapping("/list")
     fun productCategoryPage(@RequestBody productPageReqDto: ProductPageReqDto): ResponseEntity<ResponseDto<*>> {
         val categoryReqDto = CategoryReqDto(productPageReqDto.mainCategory, productPageReqDto.middleCategory)
         val productPage = productService.productCategoryPage(productPageReqDto, categoryReqDto)
         return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productPage), HttpStatus.OK)
     }
+
+    @GetMapping("/list")
+    fun list(@ModelAttribute productPageReqDto: ProductPageReqDto): ResponseEntity<ResponseDto<*>> {
+        val categoryReqDto = CategoryReqDto(productPageReqDto.mainCategory, productPageReqDto.middleCategory)
+        val productPage = productService.productCategoryPage(productPageReqDto, categoryReqDto)
+        return ResponseEntity(ResponseDto(1, "상품 목록 호출 완료", productPage), HttpStatus.OK)
+    }
+
 
     @GetMapping("/detail")
     fun productDetailPage(@RequestParam productCode: String): ResponseEntity<ResponseDto<*>> {

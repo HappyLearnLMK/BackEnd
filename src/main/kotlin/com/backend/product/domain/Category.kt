@@ -1,18 +1,16 @@
 package com.backend.product.domain
 
-import jakarta.persistence.*
+import com.backend.product.dto.req.CategoryReqDto
 
-@Entity
+
 class Category(
-
-    var middleCategory: String,
-
-    var mainCategory: String,
-
-    @Id
-    @Column(name = "CATEGORY_CODE")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var categoryCode: Long? = null
+    val middleCategory: String,
+    val mainCategory: String,
+    val categoryCode: Long? = null
 ) {
-
+    companion object {
+        fun from(categoryReqDto: CategoryReqDto): Category{
+            return Category(categoryReqDto.middleCategory, categoryReqDto.mainCategory)
+        }
+    }
 }

@@ -47,6 +47,10 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2") //Test Framework
+    testImplementation("io.kotest:kotest-assertions-core:5.6.2")   //Assertions Library
+    testImplementation("io.kotest:kotest-property:5.6.2")          //Property Testing
+
 }
 
 allOpen {
