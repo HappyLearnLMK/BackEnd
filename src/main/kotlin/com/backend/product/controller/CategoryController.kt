@@ -20,7 +20,7 @@ class CategoryController(
     @PostMapping("/save")
     fun saveCategory(@RequestBody @Valid categoryReqDto: CategoryReqDto, bindingResult: BindingResult):
             ResponseEntity<*> {
-        categoryService.saveCategory(categoryReqDto)
+        categoryService.create(categoryReqDto)
         return ResponseEntity(ResponseDto(1, "category 등록 완료", null), HttpStatus.CREATED)
     }
 }
